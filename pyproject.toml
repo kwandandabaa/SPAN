@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "football-standings"
+version = "1.0.0"
+description = "Command-line football league standings calculator"
+requires-python = ">=3.10"
+readme = "README.md"
+
+[project.scripts]
+football-standings = "football_standings.cli:main"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
