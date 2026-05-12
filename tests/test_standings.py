@@ -25,6 +25,22 @@ def test_english_1974_rules_use_two_points_and_goal_average_tiebreaker():
     assert table[3].goal_average == Decimal("1") / Decimal("2")
 
 
+def test_points_for_win_can_be_configured():
+    matches = [
+        Match("Alpha", "Bravo", 1, 0),
+        Match("Charlie", "Delta", 1, 1),
+    ]
+
+    table = calculate_standings(matches, points_for_win=3)
+
+    assert [(team.team, team.points) for team in table] == [
+        ("Alpha", 3),
+        ("Charlie", 1),
+        ("Delta", 1),
+        ("Bravo", 0),
+    ]
+
+
 def test_unbeaten_defence_sorts_first_on_equal_points():
     matches = [Match("Alpha", "Bravo", 1, 0), Match("Charlie", "Delta", 3, 1)]
 

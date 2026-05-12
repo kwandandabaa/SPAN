@@ -47,6 +47,14 @@ def test_rejects_negative_scores_with_line_number():
             io.StringIO("home_team,away_team,home_goals,away_goals\nArsenal,Chelsea,-1,0\n")
         )
 
+
+def test_rejects_non_integer_scores_with_line_number():
+    with pytest.raises(CsvFormatError, match="line 2: home_goals must be an integer"):
+        read_matches(
+            io.StringIO("home_team,away_team,home_goals,away_goals\nArsenal,Chelsea,two,0\n")
+        )
+
+
 def test_rejects_team_playing_itself():
     with pytest.raises(
         CsvFormatError,
