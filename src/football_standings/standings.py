@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from decimal import Decimal, DivisionByZero
+from decimal import Decimal
 
 
 @dataclass
@@ -74,10 +74,8 @@ def _sort_key(record: TeamRecord) -> tuple[int, Decimal, int, str]:
 def format_goal_average(record: TeamRecord, places: int = 3) -> str:
     """Format goal average for CSV output."""
 
+    goal_average = record.goal_average
     if record.goal_average is None:
         return "inf"
     quant = Decimal(10) ** -places
-    try:
-        return str(record.goal_average.quantize(quant))
-    except (DivisionByZero, ValueError):
-        return "inf"
+    return str(goal_average.quantize(quant))
