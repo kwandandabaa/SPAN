@@ -10,8 +10,8 @@ The project was intentionally kept lightweight and dependency-minimal. The appli
 
 ## Requirements
 
-- Python 3.10+
-- pip
+* Python 3.10+
+* pip
 
 Optional development dependencies (including pytest) can be installed using the dev extras group.
 
@@ -104,7 +104,14 @@ The implementation intentionally separates:
 * standings calculation logic
 * command-line orchestration
 The application was designed to remain small and readable rather than heavily abstracted or framework-driven.
+
 The focus of the exercise was correctness, reproducibility, testability, clear handling of the historical league rules, and deterministic ordering of fully tied teams.
+
+Operational metadata such as generation timestamps or processing identifiers were intentionally excluded from the output schema to keep the standings table deterministic and focused on domain data. In a production environment, these concerns would typically be handled through orchestration metadata, logging, or partitioned output conventions.
+
+The implementation intentionally avoids external runtime dependencies because the problem scope could be solved cleanly using the Python standard library.
+
+The CSV parser is intentionally strict about required columns and score validity, while remaining tolerant of additional columns to support richer historical datasets without changing the core application contract.
  
 ⸻
  
