@@ -16,7 +16,7 @@ def test_cli_accepts_filenames_and_writes_csv(tmp_path: Path):
     result = subprocess.run(
         [sys.executable, "-m", "football_standings.cli", str(input_file), str(output_file)],
         check=False,
-        env={"**os.environ, PYTHONPATH": "src"},
+        env={**os.environ, "PYTHONPATH": "src"},
         capture_output=True,
         text=True,
     )
