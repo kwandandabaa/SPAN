@@ -1,30 +1,50 @@
 # Football Standings Calculator
 
-A production-ready Python command-line application that calculates a football (soccer) league table from match-result CSV input.
 
-The included sample data calculates the English First Division table after the 10th week / round of the 1974/75 season. That season used the historical English league rules of **2 points for a win, 1 for a draw, and ranking tied teams by goal average** (`goals_for / goals_against`) rather than goal difference.
+A Python command-line application that calculates a football league standings table from CSV match results.
+The included sample dataset calculates the English First Division standings after the 10th round/week of the 1974/75 season using the historical rules in effect at the time:
+* 2 points for a win
+* 1 point for a draw
+* teams ranked by goal average (goals_for / goals_against) rather than goal difference
+The project was intentionally kept lightweight and dependency-minimal. The application itself uses only the Python standard library, with pytest used for automated testing.
 
 ## Requirements
 
 - Python 3.10+
-- `pytest` for running the test suite
+- pip
 
-The application itself uses only the Python standard library.
+Optional development dependencies (including pytest) can be installed using the dev extras group.
+
+## Project Structure
+
+```text
+.
+├── data/                      # Sample input and generated output CSV files
+├── src/football_standings/    # Application source code
+├── tests/                     # Automated test suite
+├── .claude/                   # AI collaboration notes/session artefacts
+├── ai/                        # Exported AI interaction history
+├── AI_REFLECTION.md           # Reflection on AI-assisted development
+├── CLAUDE.md                  # AI collaboration instructions/context
+├── README.md
+└── pyproject.toml
+```
 
 ## Input CSV format
 
-Input files must have a header row with these columns:
+Input files must contain the following columns:
 
-```csv
 home_team,away_team,home_goals,away_goals
-Arsenal,Chelsea,2,1
-```
 
-Additional columns are ignored, so richer source files can be used as long as the required columns are present.
+Arsenal,Chelsea,2,1
+
+
+Additional columns are ignored, allowing richer historical datasets to be used as long as the required columns are present.
+Each row represents a completed match.
 
 ## Output CSV format
 
-The program writes a conventional table with these columns:
+The generated standings table contains the following columns:
 
 ```csv
 position,team,played,wins,draws,losses,goals_for,goals_against,goal_average,points
@@ -32,50 +52,73 @@ position,team,played,wins,draws,losses,goals_for,goals_against,goal_average,poin
 
 Goal average is emitted to three decimal places. A team with zero goals conceded is emitted as `inf`.
 
-## Run from source
 
-Use stdin/stdout:
+## Setup
+Create and activate a virtual environment:
+python -m venv .venv
+source .venv/bin/activate
+Install the project and development dependencies:
+pip install -e ".[dev]"
+ 
+⸻
+ 
+## Running the Application
+#### Using filenames:
 
-```bash
-PYTHONPATH=src python -m football_standings.cli < data/english_first_division_1974_75_week10_results.csv
-```
-
-Use filenames:
-
-```bash
-PYTHONPATH=src python -m football_standings.cli \
+football-standings \
   data/english_first_division_1974_75_week10_results.csv \
   data/english_first_division_1974_75_week10_table.csv
-```
 
-## Install as a command
+#### Using stdin/stdout:
 
-```bash
-python -m pip install -e .
-football-standings data/english_first_division_1974_75_week10_results.csv
-```
+PYTHONPATH=src python -m football_standings.cli \
+  < data/english_first_division_1974_75_week10_results.csv
+ 
+⸻
+ 
+## Running Tests
+#### pytest
 
-## Run tests
-
-```bash
-python -m pytest
-```
-
-## Data notes
-
-The sample result file contains completed English First Division matches through 28 September 1974, corresponding to the 10th listed round/week in the 1974/75 fixture list. Matches listed in earlier rounds but postponed until December 1974 or April 1975 are intentionally excluded because they had not been played by the end of week 10.
-
-Sources consulted while preparing the sample data and historical rules:
-
-- BDFutbol `First Division 1974-75` result list for rounds 1-10.
-- Historical Lineups `1974-75 Week 11` PDF for a cross-check of the following week's table and confirmation that the table used `P W D L Pts GF GA GR`.
-- RSSSF / season summaries for final-table convention and season context.
-
-## Repository AI collaboration artefacts
-
-This repository includes the required AI collaboration artefacts:
-
-- `CLAUDE.md` — project instructions for AI assistants.
-- `.claude/` — session-data placeholder and notes.
-- `ai/` — exported conversation-history equivalent for this Codex session.
-- `AI_REFLECTION.md` — reflection on AI collaboration decisions.
+The test suite validates:
+* standings calculation
+* points allocation
+* goal-average ranking behaviour
+* CSV parsing/writing
+* CLI execution flow
+ 
+⸻
+ 
+## Historical Data Notes
+The sample input file contains completed English First Division matches through 28 September 1974, corresponding to the 10th listed round/week of the 1974/75 fixture schedule.
+Matches originally scheduled in earlier rounds but postponed until later in the season were intentionally excluded, since they had not yet been played by the end of week 10.
+Historical rules and fixtures were cross-checked using publicly available historical football references and season summaries, including:
+* BDFutbol season results
+* Historical Lineups weekly tables
+* RSSSF season summaries
+ 
+⸻
+ 
+## Engineering Notes
+The implementation intentionally separates:
+* CSV input/output handling
+* standings calculation logic
+* command-line orchestration
+The application was designed to remain small and readable rather than heavily abstracted or framework-driven.
+The focus of the exercise was correctness, reproducibility, testability, and clear handling of the historical league rules.
+ 
+⸻
+ 
+## AI Collaboration
+This repository was developed using AI-assisted tooling, primarily OpenAI Codex.
+AI assistance was used for:
+* implementation scaffolding
+* iteration on project structure
+* validation of historical-rule edge cases
+* test generation/refinement
+* documentation refinement
+Architectural decisions, historical-rule verification, validation behaviour, and final implementation decisions were reviewed and adjusted manually during development.
+The repository includes the required collaboration artefacts:
+* CLAUDE.md
+* .claude/
+* ai/
+* AI_REFLECTION.md
