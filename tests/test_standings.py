@@ -33,3 +33,12 @@ def test_unbeaten_defence_sorts_first_on_equal_points():
     assert [team.team for team in table[:2]] == ["Alpha", "Charlie"]
     assert format_goal_average(table[0]) == "inf"
     assert format_goal_average(table[1]) == "3.000"
+
+def test_fully_tied_teams_sort_alphabetically():
+    matches = [
+        Match("Bravo", "Alpha", 1, 1),
+    ]
+
+    table = calculate_standings(matches)
+
+    assert [team.team for team in table] == ["Alpha", "Bravo"]
