@@ -120,5 +120,5 @@ Architectural decisions, historical-rule verification, validation behaviour, and
 The repository includes the required collaboration artefacts:
 * CLAUDE.md
 * .claude/
-* ai/
+* ai/ (includes `ai/codex-session-export.md` and `ai/codex-conversation-history.md`)
 * AI_REFLECTION.md
