@@ -1,5 +1,7 @@
 # CLAUDE.md
 
+This file documents the project instructions and engineering constraints used during AI-assisted development. Although the implementation workflow primarily used OpenAI Codex, the filename was retained to align with the required submission artefacts.
+
 ## Project goal
 
 Build and maintain a production-ready Python CLI that calculates football league standings from CSV match results. The target demonstration is the English First Division table after week 10 of the 1974/75 season.
