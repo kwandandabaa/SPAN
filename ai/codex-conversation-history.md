@@ -1,6 +1,6 @@
 # Codex Conversation History
 
-Exported on 2026-05-12 from the Codex collaboration session.
+Exported on 2026-05-12 from the Codex collaboration session. Updated on 2026-05-13.
 
 This file records the conversation history available from the project session. It complements `ai/codex-session-export.md`, which is a short workflow summary.
 
@@ -50,4 +50,76 @@ Committed changes on the current branch and created the pull request metadata.
 
 ```text
 great. they also asked for a session history of our conversation, are you able to add that to the repo?
+```
+
+## Turn 4 - Assistant
+
+```text
+Added ai/codex-conversation-history.md, updated README.md to point to the transcript-style history file, committed the local change, and published the artefact to the GitHub PR branch using the connected GitHub app after local HTTPS push authentication failed.
+```
+
+## Turn 5 - User
+
+```text
+great. without making any changes, is my project structure and packagaing setup production ready?
+```
+
+## Turn 6 - Assistant
+
+```text
+Reviewed the repository without making changes. The project was assessed as well-shaped for a small CLI submission, with a src/ layout, tests, sample data, docs, and console script entry point. The review noted production-readiness gaps around minimal pyproject metadata, README rendering, version duplication, local Git hygiene, and a CLI test environment issue.
+```
+
+## Turn 7 - User
+
+```text
+thanks. looking at the tests, am i covering all bases? what test am i missing? and which feels unnecessary?
+```
+
+## Turn 8 - Assistant
+
+```text
+Reviewed the tests and recommended adding coverage for CLI stdin/stdout mode, --points-for-win behavior, CLI failure handling, invalid CSV values, goals-for tiebreaking, and exact CSV output shape. Identified the fully tied alphabetical sort test as the least domain-essential but still useful for deterministic output.
+```
+
+## Turn 9 - User
+
+```text
+great, lets add the CLI failure behaviour, points for win, and non integer score validation tests to the code
+```
+
+## Turn 10 - Assistant
+
+```text
+Added tests for CLI malformed CSV failure behavior, configurable points-for-win behavior, and non-integer score validation. Verified the test suite with the project virtualenv using .venv/bin/python -m pytest.
+```
+
+## Turn 11 - User
+
+```text
+do i have sufficient error handling?
+```
+
+## Turn 12 - Assistant
+
+```text
+Reviewed error handling at the CLI, CSV parser, and core calculation layers. The review found handling sufficient for the assignment, with good coverage for missing columns, blank values, invalid scores, self-play, argparse validation, and CLI conversion of OSError/CsvFormatError. It recommended wrapping csv.Error and UnicodeDecodeError for a more production-ready CLI.
+```
+
+## Turn 13 - User
+
+```text
+okay lets update csv parsing so csv. error is caught and wrapped as csvformaterror with a user-facing message, without overcomplicating the parser.
+```
+
+## Turn 14 - Assistant
+
+```text
+Updated csv_io.py so parser-level csv.Error exceptions are wrapped as CsvFormatError with clean user-facing messages, without enabling strict CSV parsing or otherwise changing parser behavior. Added a regression test in tests/test_csv_io.py and verified .venv/bin/python -m pytest passed with 12 tests.
+```
+
+## Turn 15 - User
+
+```text
+thanks, please update the conversation history file and ensure local and git changes are committed
 ```
