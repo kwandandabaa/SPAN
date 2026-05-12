@@ -104,7 +104,7 @@ The implementation intentionally separates:
 * standings calculation logic
 * command-line orchestration
 The application was designed to remain small and readable rather than heavily abstracted or framework-driven.
-The focus of the exercise was correctness, reproducibility, testability, and clear handling of the historical league rules.
+The focus of the exercise was correctness, reproducibility, testability, clear handling of the historical league rules, and deterministic ordering of fully tied teams.
  
 ⸻
  
