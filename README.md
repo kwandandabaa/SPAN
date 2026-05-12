@@ -126,20 +126,21 @@ Operational metadata such as generation timestamps or processing identifiers wer
 The implementation intentionally avoids external runtime dependencies because the problem scope could be solved cleanly using the Python standard library.
 
 The CSV parser is intentionally strict about required columns and score validity, while remaining tolerant of additional columns to support richer historical datasets without changing the core application contract.
- 
-⸻
- 
-## AI Collaboration
-This repository was developed using AI-assisted tooling, primarily OpenAI Codex.
-AI assistance was used for:
-* implementation scaffolding
-* iteration on project structure
-* validation of historical-rule edge cases
-* test generation/refinement
-* documentation refinement
-Architectural decisions, historical-rule verification, validation behaviour, and final implementation decisions were reviewed and adjusted manually during development.
-The repository includes the required collaboration artefacts:
-* CLAUDE.md
-* .claude/
-* ai/ (includes `ai/codex-session-export.md` and `ai/codex-conversation-history.md`)
-* AI_REFLECTION.md
+
+Sources consulted while preparing the sample data and historical rules:
+
+- BDFutbol `First Division 1974-75` result list for rounds 1-10.
+- Historical Lineups `1974-75 Week 11` PDF for a cross-check of the following week's table and confirmation that the table used `P W D L Pts GF GA GR`.
+- RSSSF / season summaries for final-table convention and season context.
+
+## Repository AI collaboration artefacts
+
+This repository includes the required AI collaboration artefacts:
+
+- `CLAUDE.md` — project instructions for AI assistants.
+- `.claude/` — session-data placeholder and notes.
+- `ai/` — exported conversation history and workflow summary for this Codex session.
+  - `ai/codex-conversation-history.md` contains the transcript-style conversation history.
+  - `ai/codex-session-export.md` contains a concise workflow summary.
+- `AI_REFLECTION.md` — reflection on AI collaboration decisions.
+
