@@ -55,6 +55,23 @@ def test_rejects_non_integer_scores_with_line_number():
         )
 
 
+def test_wraps_csv_parser_errors_as_format_errors(monkeypatch):
+    class BrokenReader:
+        fieldnames = ["home_team", "away_team", "home_goals", "away_goals"]
+        line_num = 2
+
+        def __iter__(self):
+            return self
+
+        def __next__(self):
+            raise csv.Error("bad CSV data")
+
+    monkeypatch.setattr(csv, "DictReader", lambda handle: BrokenReader())
+
+    with pytest.raises(CsvFormatError, match="invalid CSV near line 2: bad CSV data"):
+        read_matches(io.StringIO(""))
+
+
 def test_rejects_team_playing_itself():
     with pytest.raises(
         CsvFormatError,

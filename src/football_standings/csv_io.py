@@ -31,24 +31,32 @@ def read_matches(handle: TextIO) -> list[Match]:
     """Read match results from CSV with a header row."""
 
     reader = csv.DictReader(handle)
-    if reader.fieldnames is None:
+    try:
+        fieldnames = reader.fieldnames
+    except csv.Error as exc:
+        raise CsvFormatError(f"invalid CSV: {exc}") from exc
+
+    if fieldnames is None:
         raise CsvFormatError("Input CSV is empty")
-    missing = [column for column in INPUT_COLUMNS if column not in reader.fieldnames]
+    missing = [column for column in INPUT_COLUMNS if column not in fieldnames]
     if missing:
         raise CsvFormatError(f"missing required CSV columns: {', '.join(missing)}")
 
     matches: list[Match] = []
-    for line_number, row in enumerate(reader, start=2):
-        try:
-            home_team = _required_text(row, "home_team")
-            away_team = _required_text(row, "away_team")
-            home_goals = _required_non_negative_int(row, "home_goals")
-            away_goals = _required_non_negative_int(row, "away_goals")
-        except CsvFormatError as exc:
-            raise CsvFormatError(f"line {line_number}: {exc}") from exc
-        if home_team == away_team:
-            raise CsvFormatError(f"line {line_number}: a team cannot play itself")
-        matches.append(Match(home_team, away_team, home_goals, away_goals))
+    try:
+        for line_number, row in enumerate(reader, start=2):
+            try:
+                home_team = _required_text(row, "home_team")
+                away_team = _required_text(row, "away_team")
+                home_goals = _required_non_negative_int(row, "home_goals")
+                away_goals = _required_non_negative_int(row, "away_goals")
+            except CsvFormatError as exc:
+                raise CsvFormatError(f"line {line_number}: {exc}") from exc
+            if home_team == away_team:
+                raise CsvFormatError(f"line {line_number}: a team cannot play itself")
+            matches.append(Match(home_team, away_team, home_goals, away_goals))
+    except csv.Error as exc:
+        raise CsvFormatError(f"invalid CSV near line {reader.line_num}: {exc}") from exc
     return matches
 
 
