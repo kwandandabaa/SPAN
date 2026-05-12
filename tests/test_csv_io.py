@@ -18,7 +18,8 @@ def test_reads_input_csv_and_writes_conventional_table_csv():
     table_output = io.StringIO()
     write_standings(table_output, calculate_standings(matches))
 
-    rows = list(csv.DictReader(io.StringIO(table_output.getvalue())))
+    table_output.seek(0)
+    rows = list(csv.DictReader(table_output))
     assert rows[0] == {
         "position": "1",
         "team": "Arsenal",
@@ -44,4 +45,16 @@ def test_rejects_negative_scores_with_line_number():
     with pytest.raises(CsvFormatError, match="line 2: home_goals must be non-negative"):
         read_matches(
             io.StringIO("home_team,away_team,home_goals,away_goals\nArsenal,Chelsea,-1,0\n")
+        )
+
+def test_rejects_team_playing_itself():
+    with pytest.raises(
+        CsvFormatError,
+        match="a team cannot play itself",
+    ):
+        read_matches(
+            io.StringIO(
+                "home_team,away_team,home_goals,away_goals\n"
+                "Arsenal,Arsenal,1,0\n"
+            )
         )
