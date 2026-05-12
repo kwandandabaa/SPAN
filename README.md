@@ -54,39 +54,53 @@ Goal average is emitted to three decimal places. A team with zero goals conceded
 
 
 ## Setup
+
+Ensure `python` resolves to Python 3.10 or newer.
+
 Create and activate a virtual environment:
+
+```bash
 python -m venv .venv
 source .venv/bin/activate
-Install the project and development dependencies:
-pip install -e ".[dev]"
- 
-⸻
- 
-## Running the Application
-#### Using filenames:
+```
 
+Install the project and development dependencies:
+
+```bash
+pip install -e ".[dev]"
+```
+
+## Running the Application
+
+### Using filenames
+
+```bash
 football-standings \
   data/english_first_division_1974_75_week10_results.csv \
   data/english_first_division_1974_75_week10_table.csv
+```
 
-#### Using stdin/stdout:
+### Using stdin/stdout
 
+```bash
 PYTHONPATH=src python -m football_standings.cli \
   < data/english_first_division_1974_75_week10_results.csv
- 
-⸻
- 
+```
+
 ## Running Tests
-#### pytest
+
+Run the automated test suite:
+
+```bash
+pytest
+```
 
 The test suite validates:
-* standings calculation
-* points allocation
-* goal-average ranking behaviour
-* CSV parsing/writing
-* CLI execution flow
- 
-⸻
+- standings calculation
+- points allocation
+- goal-average ranking behaviour
+- CSV parsing/writing
+- CLI execution flow
  
 ## Historical Data Notes
 The sample input file contains completed English First Division matches through 28 September 1974, corresponding to the 10th listed round/week of the 1974/75 fixture schedule.
