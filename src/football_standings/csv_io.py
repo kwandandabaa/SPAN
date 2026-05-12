@@ -32,7 +32,7 @@ def read_matches(handle: TextIO) -> list[Match]:
 
     reader = csv.DictReader(handle)
     if reader.fieldnames is None:
-        return []
+        raise CsvFormatError("Input CSV is empty")
     missing = [column for column in INPUT_COLUMNS if column not in reader.fieldnames]
     if missing:
         raise CsvFormatError(f"missing required CSV columns: {', '.join(missing)}")
